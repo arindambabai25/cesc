@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>CESE Calculation</title>
+</head>
+<body>
+<div class="container mt-2">
+    <h4>CESC Details</h4>
+    <div class="row mb-3">
+        <label for="totalUnitCESC" class="col-6 col-form-label">Total Unit CESC</label>
+        <div class="col-6">
+            <input type="number" class="form-control" id="totalUnitCESC" required value="">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="payableAmount" class="col-6 col-form-label">Total Amount</label>
+        <div class="col-6">
+            <input type="number" class="form-control" id="payableAmount" required value="">
+        </div>
+    </div>
+
+    <hr>
+
+    <h4>Submeter Details</h4>
+    <div class="row mb-3">
+        <label for="previousUnit" class="col-6 col-form-label">Previous Unit</label>
+        <div class="col-6">
+            <input type="number" class="form-control" id="previousUnit" required value="">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="currentUnit" class="col-6 col-form-label">Current Unit</label>
+        <div class="col-6">
+            <input type="number" class="form-control" id="currentUnit" required value="">
+        </div>
+    </div>
+
+    <button class="btn btn-primary col-12" id="calculateButton">Calculate</button>
+
+
+
+
+</div>
+
+<div class="modal" tabindex="-1" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Breakdown:  <span id="date-container"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-1">
+                    <label for="totalUnitC" class="col-7 col-form-label p-0 px-1">Total Unit CESC :</label>
+                    <div class="col-5 p-0 px-1" id="totalUnitC"> </div>
+                </div>
+                <div class="row mb-1">
+                    <label for="netPayableC" class="col-7 col-form-label p-0 px-1">Net Payable CESC :</label>
+                    <div class="col-5 p-0 px-1" id="netPayableC"> </div>
+                </div>
+                <div class="row mb-1">
+                    <label for="EnergyChargeC" class="col-7 col-form-label p-0 px-1">Energy Charge CESC :</label>
+                    <div class="col-5 p-0 px-1" id="EnergyChargeC"> </div>
+                </div>
+                <div class="row mb-1">
+                    <label for="otherChargeC" class="col-7 col-form-label p-0 px-1">Other Charge CESC :</label>
+                    <div class="col-5 p-0 px-1" id="otherChargeC"> </div>
+                </div>
+
+                <hr>
+
+                <div class="row mb-1">
+                    <label for="myUnitC" class="col-7 col-form-label p-0 px-1">My Unit :</label>
+                    <div class="col-5 p-0 px-1" id="myUnitC"> </div>
+                </div>
+                <div class="row mb-1">
+                    <label for="myRatioC" class="col-7 col-form-label p-0 px-1">My Ratio :</label>
+                    <div class="col-5 p-0 px-1" id="myRatioC"> </div>
+                </div>
+
+                <hr>
+
+                <table class="table table-sm table-bordered table-responsive p-0 px-1 m-0">
+                    <thead>
+                    <tr>
+                        <th scope="col">Slab</th>
+                        <th scope="col">Rate</th>
+                        <th scope="col">My Unit</th>
+                        <th scope="col">Rs</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody">
+
+
+                    </tbody>
+                </table>
+
+
+                <div class="row mb-1 mt-2">
+                    <label for="myEnergyChargeC" class="col-7 col-form-label p-0 px-1">My Energy Charge :</label>
+                    <div class="col-5 p-0 px-1" id="myEnergyChargeC"> </div>
+                </div>
+
+                <div class="row mb-1">
+                    <label for="myOtherChargeC" class="col-7 col-form-label p-0 px-1">My Other Charge :</label>
+                    <div class="col-5 p-0 px-1" id="myOtherChargeC"> </div>
+                </div>
+
+                <div class="row mb-1 fw-bold text-danger">
+                    <label for="totalpayableM" class="col-7 col-form-label p-0 px-1">Total payable :</label>
+                    <div class="col-5 p-0 px-1" id="totalpayableM"> </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $(document).ready(function() {
+        const currentDate = new Date();
+        const formattedDate = formatDate(currentDate);
+
+        const dateDiv = document.getElementById('date-container');
+        dateDiv.textContent = formattedDate;
+
+        var totalUnitCESC=0;
+        var payableAmount=0;
+        var previousUnit=0;
+        var currentUnit=0;
+        var myUnit;
+        var myRatio;
+        var exceed;
+        var units;
+        var rates;
+        var energyCharge=0;
+        var myenergyCharge=0;
+        var otherCharge;
+        var myotherCharge;
+
+
+
+        $('#calculateButton').click(function() {
+            totalUnitCESC = parseInt($('#totalUnitCESC').val());
+            payableAmount = parseInt($('#payableAmount').val());
+
+            previousUnit = parseInt($('#previousUnit').val());
+            currentUnit = parseInt($('#currentUnit').val());
+
+
+            if(totalUnitCESC==0){
+                alert('Put CESC Unit');
+                return false;
+            }
+
+            if(payableAmount==0){
+                alert('Put CESC Bill Amount');
+                return false;
+            }
+
+            if(previousUnit==0){
+                alert('Put SubMeter Previous Unit');
+                return false;
+            }
+
+            if(currentUnit==0){
+                alert('Put SubMeter Current Unit');
+                return false;
+            }
+
+            if((currentUnit-previousUnit)<=0){
+                alert('Put SubMeter Units Properly');
+                return false;
+            }
+
+            myUnit=currentUnit-previousUnit;
+            var remainingUnits = myUnit;
+            var remainingUnitsC = totalUnitCESC;
+
+            myRatio=myUnit/totalUnitCESC;
+            myRatio = parseFloat(myRatio.toFixed(2));
+
+
+            $('#myUnitC').html(myUnit);
+            $('#myRatioC').html(myRatio);
+
+            if(totalUnitCESC>300){
+                exceed = totalUnitCESC-300;
+                units = [25, 35, 40, 50, 150, exceed];
+                rates = [5.18, 5.69, 6.70, 7.45, 7.62, 9.21];
+            }else{
+                units = [25, 35, 40, 50, 150];
+                rates = [5.18, 5.69, 6.70, 7.45, 7.62];
+            }
+
+
+
+            const tbody = $('#tbody');
+
+
+            units.forEach((unit, index) => {
+                if (remainingUnits <= 0) return;
+                var prefix = index === 0 ? 'F' : 'N';
+                var rate = rates[index] || 0;
+
+
+                var ratio = unit*myRatio;
+                ratio = parseFloat(ratio.toFixed(2));
+
+
+                if(ratio<remainingUnits){
+                    var actunit=ratio;
+                }else{
+                    var actunit=remainingUnits;
+                }
+
+                remainingUnits -= actunit;
+
+                var amt = rate * actunit;
+                amt = parseFloat(amt.toFixed(2));
+
+
+                myenergyCharge=myenergyCharge+amt;
+
+                var row = `
+                        <tr>
+                            <th scope="row">${prefix}${unit}</th>
+                            <td>${rate}</td>
+                            <td>${actunit}</td>
+                            <td>${amt}</td>
+                        </tr>
+                    `;
+
+                tbody.append(row);
+            });
+
+
+
+
+
+
+
+            units.forEach((unit, index) => {
+                if (remainingUnitsC <= 0) return;
+                var rate = rates[index] || 0;
+
+                var unitsToDeduct = Math.min(unit, remainingUnitsC);
+                var amt = rate * unitsToDeduct;
+
+                remainingUnitsC -= unitsToDeduct;
+
+                energyCharge=energyCharge+amt;
+
+
+            });
+
+
+
+            energyCharge = parseFloat(energyCharge.toFixed(2));
+            otherCharge = payableAmount-energyCharge;
+
+            if(otherCharge<=0){
+                alert('Put CESC Bill Amount Properly');
+                return false;
+            }
+
+
+            otherCharge = parseFloat(otherCharge.toFixed(2));
+
+
+            $('#totalUnitC').html(totalUnitCESC);
+            $('#netPayableC').html(payableAmount);
+            $('#EnergyChargeC').html(energyCharge);
+            $('#otherChargeC').html(otherCharge);
+            $('#myOtherChargeC').html(parseFloat((otherCharge/2).toFixed(2)));
+            $('#myEnergyChargeC').html(parseFloat(myenergyCharge.toFixed(2)));
+
+
+            $('#totalpayableM').html(parseFloat(((otherCharge/2)+myenergyCharge).toFixed(2)));
+
+
+            
+            $("#myModal").modal('show');
+        });
+    });
+
+
+
+
+        function formatDate(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+</script>
+</body>
+</html>
