@@ -182,6 +182,12 @@
             var remainingUnits = myUnit;
             var remainingUnitsC = totalUnitCESC;
 
+            if(myUnit>=totalUnitCESC){
+                alert('Put SubMeter Units Properly');
+                return false;
+            }
+            
+
             myRatio=myUnit/totalUnitCESC;
             myRatio = parseFloat(myRatio.toFixed(2));
 
@@ -202,7 +208,7 @@
 
             const tbody = $('#tbody');
 
-
+            tbody.html('');
             units.forEach((unit, index) => {
                 if (remainingUnits <= 0) return;
                 var prefix = index === 0 ? 'F' : 'N';
@@ -236,7 +242,7 @@
                         </tr>
                     `;
 
-                tbody.html(row);
+                tbody.append(row);
             });
 
 
